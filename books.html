@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Books</title></head>
+<body>
+  <p id="firstTitle"></p>
+  <p id="secondAuthor"></p>
+  <ul id="genresList"></ul>
+  <p id="error"></p>
+
+  <script>
+    fetch('books.json')
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById('firstTitle').textContent = data.books[0].title;
+        document.getElementById('secondAuthor').textContent = data.books[1].author;
+
+        const ul = document.getElementById('genresList');
+
+        data.books.forEach(b => {
+          const li = document.createElement('li');
+          li.textContent = b.title + ' — ' + b.genres.join(', ');
+          ul.appendChild(li);
+        });
+      })
+
+      .catch(() => {
+        document.getElementById('error').textContent = 'Failed to load data.';
+      });
+      
+  </script>
+</body>
+</html>
